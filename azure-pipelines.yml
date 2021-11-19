@@ -9,7 +9,7 @@ trigger:
 pool: nightly2
 
 container:
-  image: sonicdev-microsoft.azurecr.io/docker-sonic-mgmt:latest
+  image: sonicdev-microsoft.azurecr.io/sonic-slave-buster:latest
 
 steps:
 - script: |
