@@ -1,0 +1,23 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool: nightly2
+
+container:
+  image: sonicdev-microsoft.azurecr.io/docker-sonic-mgmt:latest
+  options:  "--name ci-container -v /usr/bin/docker:/tmp/docker:ro"
+
+steps:
+- script: |
+    /tmp/docker exec -t -u 0 ci-container \
+    sh -c "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" -y install sudo"
+  displayName: 'Install Sudo in container (thanks Microsoft!)'
+- script: |
+    echo Hello, world!
+    whoami
+  displayName: 'Run a script'
